@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mis 15 Años - María Elizabeth</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --burgundy: #800020;
+      --burgundy-dark: #500014;
+      --rose-gold: #b76e79;
+      --pink-soft: #fcf0f2;
+      --gold: #d4af37;
+      --text-dark: #4a4a4a;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background-color: var(--pink-soft);
+      color: var(--text-dark);
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+
+    #particles-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 10;
+    }
+
+    .music-control {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 100;
+      background: rgba(255, 255, 255, 0.9);
+      border: 2px solid var(--rose-gold);
+      border-radius: 50px;
+      padding: 8px 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+      backdrop-filter: blur(5px);
+    }
+
+    .music-btn {
+      background: var(--burgundy);
+      color: white;
+      border: none;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+    }
+
+    .envelope-wrapper {
+      position: fixed;
+      inset: 0;
+      background: var(--pink-soft);
+      z-index: 50;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 1s ease, visibility 1s ease;
+    }
+
+    .envelope-wrapper.opened {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .envelope {
+      width: 320px;
+      height: 220px;
+      background: #f4e3e6;
+      border: 2px solid var(--rose-gold);
+      border-radius: 8px;
+      position: relative;
+      box-shadow: 0 15px 35px rgba(128, 0, 32, 0.2);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .wax-seal {
+      width: 70px;
+      height: 70px;
+      background: radial-gradient(circle, #e6ca65 0%, #b8860b 100%);
+      border-radius: 50%;
+      border: 3px solid #fff;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--burgundy-dark);
+      font-family: 'Great Vibes', cursive;
+      font-size: 26px;
+      font-weight: bold;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.08); }
+      100% { transform: scale(1); }
+    }
+
+    .open-instructions {
+      margin-top: 25px;
+      font-family: 'Playfair Display', serif;
+      color: var(--burgundy);
+      letter-spacing: 2px;
+      font-size: 14px;
+      text-transform: uppercase;
+    }
+
+    .container {
+      max-width: 650px;
+      margin: 0 auto;
+      background: #ffffff;
+      min-height: 100vh;
+      box-shadow: 0 0 25px rgba(0,0,0,0.08);
+      position: relative;
+      padding: 40px 25px;
+      text-align: center;
+      border-left: 1px solid #f0dfe2;
+      border-right: 1px solid #f0dfe2;
+    }
+
+    .floral-header {
+      font-family: 'Great Vibes', cursive;
+      color: var(--burgundy);
+      font-size: 65px;
+      margin-bottom: 5px;
+      line-height: 1.1;
+    }
+
+    .name-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 32px;
+      color: var(--burgundy);
+      letter-spacing: 2px;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+    }
+
+    .poem {
+      font-style: italic;
+      color: #666;
+      font-size: 14px;
+      line-height: 1.7;
+      margin: 25px auto;
+      max-width: 480px;
+    }
+
+    .section-divider {
+      width: 60px;
+      height: 2px;
+      background: var(--rose-gold);
+      margin: 30px auto;
+    }
+
+    .parents-section {
+      margin: 30px 0;
+      font-size: 15px;
+      line-height: 1.8;
+    }
+
+    .parents-section h3 {
+      font-family: 'Playfair Display', serif;
+      color: var(--rose-gold);
+      font-size: 16px;
+      margin-bottom: 10px;
+      font-weight: 400;
+    }
+
+    .highlight-name {
+      color: var(--burgundy);
+      font-weight: 600;
+    }
+
+    .countdown-container {
+      background: var(--pink-soft);
+      border-radius: 12px;
+      padding: 20px 10px;
+      margin: 30px 0;
+      border: 1px solid #f0dfe2;
+    }
+
+    .countdown-title {
+      font-family: 'Playfair Display', serif;
+      color: var(--burgundy);
+      font-size: 18px;
+      margin-bottom: 15px;
+      letter-spacing: 1px;
+    }
+
+    .timer {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+    }
+
+    .timer-block {
+      background: #fff;
+      padding: 10px 14px;
+      border-radius: 8px;
+      min-width: 65px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    }
+
+    .timer-number {
+      font-size: 22px;
+      font-weight: 600;
+      color: var(--burgundy);
+    }
+
+    .timer-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      color: #888;
+      margin-top: 4px;
+    }
+
+    .event-card {
+      margin: 35px 0;
+      padding: 20px;
+      border-radius: 10px;
+      border: 1px dashed var(--rose-gold);
+      background: #fff;
+    }
+
+    .event-type {
+      font-family: 'Playfair Display', serif;
+      color: var(--burgundy);
+      font-size: 20px;
+      margin-bottom: 8px;
+    }
+
+    .event-details {
+      font-size: 14px;
+      color: var(--text-dark);
+      line-height: 1.6;
+      margin-bottom: 15px;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 12px 28px;
+      border-radius: 30px;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      margin: 5px;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+    }
+
+    .btn-maps {
+      background: var(--burgundy);
+      color: #fff;
+    }
+
+    .btn-whatsapp {
+      background: #25D366;
+      color: #fff;
+      font-size: 15px;
+      padding: 14px 32px;
+      margin-top: 15px;
+    }
+
+    .footer-msg {
+      font-family: 'Great Vibes', cursive;
+      font-size: 38px;
+      color: var(--burgundy);
+      margin-top: 40px;
+    }
+  </style>
+</head>
+<body>
+
+  <canvas id="particles-canvas"></canvas>
+
+  <div class="music-control">
+    <button class="music-btn" id="play-btn">🎵</button>
+    <span style="font-size: 12px; color: var(--burgundy);">Música</span>
+  </div>
+
+  <div class="envelope-wrapper" id="envelope-wrapper">
+    <div class="envelope" onclick="openEnvelope()">
+      <div class="wax-seal">XV</div>
+    </div>
+    <div class="open-instructions">Haz clic en el sello para abrir</div>
+  </div>
+
+  <div class="container">
+    <div class="floral-header">Mis XV Años</div>
+    <div class="name-title">María Elizabeth</div>
+
+    <p class="poem">
+      Dejo atrás la niñez con mucha gratitud y recibo esta etapa con entusiasmo, lista para aprender, asumir nuevos retos y construir mis propios sueños con determinación.<br><br>
+      Por eso con gran alegría me gustaría contar con tu presencia.
+    </p>
+
+    <div class="section-divider"></div>
+
+    <div class="parents-section">
+      <h3>Con el amor de mis padres</h3>
+      <div class="highlight-name">María Del Rosario y Eduardo Ramos</div>
+      <br>
+      <h3>Y mis padrinos</h3>
+      <div class="highlight-name">Roberto Esparza y Liliaana Pérez</div>
+    </div>
+
+    <div class="countdown-container">
+      <div class="countdown-title">Faltan para la gran celebración:</div>
+      <div class="timer">
+        <div class="timer-block">
+          <div class="timer-number" id="days">00</div>
+          <div class="timer-label">Días</div>
+        </div>
+        <div class="timer-block">
+          <div class="timer-number" id="hours">00</div>
+          <div class="timer-label">Horas</div>
+        </div>
+        <div class="timer-block">
+          <div class="timer-number" id="minutes">00</div>
+          <div class="timer-label">Min</div>
+        </div>
+        <div class="timer-block">
+          <div class="timer-number" id="seconds">00</div>
+          <div class="timer-label">Seg</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="event-card">
+      <div class="event-type">Ceremonia Religiosa</div>
+      <div class="event-details">
+        <strong>Sábado 21 de Noviembre</strong><br>
+        Hora: 1:00 PM<br>
+        Iglesia San José Obrero
+      </div>
+      <a class="btn btn-maps" href="https://maps.app.goo.gl/g2vDTqcwtGVuUGQG8?g_st=aw" target="_blank" rel="noopener noreferrer">Ver Ubicación de la Iglesia</a>
+    </div>
+
+    <div class="event-card">
+      <div class="event-type">Recepción</div>
+      <div class="event-details">
+        <strong>Salón Dieguez</strong><br>
+        Solidaridad 185, San Javier, 45307 Tala, Jal.<br>
+        Hora: 3:00 PM
+      </div>
+      <a class="btn btn-maps" href="https://maps.app.goo.gl/b8qKSS7mWjatkYhi6" target="_blank" rel="noopener noreferrer">Ver Ubicación del Salón</a>
+    </div>
+
+    <div class="section-divider"></div>
+
+    <div>
+      <div style="font-family: 'Playfair Display', serif; font-size: 18px; color: var(--burgundy);">¿Nos acompañas?</div>
+      <p style="font-size: 13px; color: #777; margin-top: 5px;">Por favor confirma tu asistencia antes del evento.</p>
+      <a class="btn btn-whatsapp" href="https://wa.me/+523324866159?text=%C2%A1Hola%2C%20confirmo%20asistencia%20de%20los%2015%20a%C3%B1os%20de%20Mar%C3%ADa%20Elizabeth%20%F0%9F%98%81!" target="_blank" rel="noopener noreferrer">Confirmar por WhatsApp</a>
+    </div>
+
+    <div class="footer-msg">¡Te Esperamos!</div>
+  </div>
+
+  <script>
+    function updateCountdown() {
+      const eventDate = new Date("November 21, 2026 13:00:00").getTime();
+      const now = new Date().getTime();
+      const difference = eventDate - now;
+
+      if (difference > 0) {
+        const d = Math.floor(difference / (1000 * 60 * 60 * 24));
+        const h = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const m = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+        const s = Math.floor((difference % (1000 * 60)) / 1000);
+
+        document.getElementById("days").innerText = d < 10 ? "0" + d : d;
+        document.getElementById("hours").innerText = h < 10 ? "0" + h : h;
+        document.getElementById("minutes").innerText = m < 10 ? "0" + m : m;
+        document.getElementById("seconds").innerText = s < 10 ? "0" + s : s;
+      }
+    }
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
+
+    function openEnvelope() {
+      document.getElementById("envelope-wrapper").classList.add("opened");
+    }
+
+    const canvas = document.getElementById('particles-canvas');
+    const ctx = canvas.getContext('2d');
+    let width = canvas.width = window.innerWidth;
+    let height = canvas.height = window.innerHeight;
+
+    window.addEventListener('resize', () => {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    });
+
+    const particles = Array.from({ length: 35 }, () => ({
+      x: Math.random() * width,
+      y: Math.random() * height,
+      size: Math.random() * 6 + 4,
+      speedY: Math.random() * 1 + 0.5,
+      speedX: Math.random() * 0.6 - 0.3,
+      color: Math.random() > 0.4 ? '#800020' : '#b76e79',
+      opacity: Math.random() * 0.6 + 0.3
+    }));
+
+    function animateParticles() {
+      ctx.clearRect(0, 0, width, height);
+      particles.forEach(p => {
+        p.y += p.speedY;
+        p.x += p.speedX;
+
+        if (p.y > height) {
+          p.y = -10;
+          p.x = Math.random() * width;
+        }
+
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.fillStyle = p.color;
+        ctx.globalAlpha = p.opacity;
+        ctx.fill();
+      });
+      requestAnimationFrame(animateParticles);
+    }
+    animateParticles();
+  </script>
+</body>
+</html>
